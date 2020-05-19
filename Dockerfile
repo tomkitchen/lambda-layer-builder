@@ -10,5 +10,5 @@ RUN make altinstall
 RUN rm -rf /usr/src/Python-3.7.2
 RUN yum install yum-utils rpmdevtools -y A; yum clean all
 WORKDIR /home/ec2-user
-RUN mkdir -p build/pip/python/lib/python3.7/site-packages build/yum
+RUN mkdir -p build
 CMD ["/bin/bash", "mount/run.sh"]
