@@ -9,15 +9,12 @@ if [[ -s $SCRIPTROOT/yum ]];then
   cd /tmp
   yumdownloader $(echo n | sudo yum install $(cat $SCRIPTROOT/yum) | grep "will be installed" | cut -d " " -f 3 | paste -sd " ")
   rpmdev-extract *rpm
-  mkdir -p $BUILDDIR/bin $BUILDDIR/lib64
-  cd $BUILDDIR/lib64
-  cp -R /tmp/*/usr/lib64/* .
+  mkdir -p $BUILDDIR/bin
   cd $BUILDDIR/bin
+  cp -R /tmp/*/usr/lib64/*/bin/* .
   cp $(find /tmp/*/usr/libexec -type f) .
 fi
 
-PATHS_ARRAY=($BUILDDIR/lib64/*/bin)
-export PATH=$PATH:$(echo ${PATHS_ARRAY[@]}: | tr " " :)
 if [[ -s $SCRIPTROOT/pip ]];then
   cd $BUILDDIR
   pip3.7 install -r $SCRIPTROOT/pip -t python/lib/python3.7/site-packages
